@@ -1,0 +1,25 @@
+name: Windows-CRD
+
+on: 
+  push:
+  workflow_dispatch:
+    inputs:
+      authcode:
+        description: 'drc'
+        required: true
+      pincode:
+        description: 'pn'
+        required: true
+  
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: about to go
+      run: ./initial.ps1
+    - name: Starting CRD
+      run: ${{ github.event.inputs.authcode }} -pin=${{ github.event.inputs.pincode }}
+    - name: flash
+      run: ./runor.ps1
